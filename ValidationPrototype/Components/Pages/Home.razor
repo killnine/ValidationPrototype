@@ -1,0 +1,15 @@
+﻿@page "/"
+@using ValidationPrototype.Models
+
+<PageTitle>Home</PageTitle>
+
+<Bill Model="defaultModel" @rendermode="InteractiveServer"/>
+
+@code
+{
+    BillModel defaultModel = new BillModel()
+    {
+        BilleeContact = new ContactModel("Billee Contact"),
+        BillerContact = new ContactModel("Biller Contact"),
+    };
+}

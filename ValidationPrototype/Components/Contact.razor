@@ -1,0 +1,48 @@
+﻿@using ValidationPrototype.Models
+
+<div class="row">
+    <div class="col">
+        <label class="form-label">@Model.Header <span class="text-danger">*</span></label>
+    </div>
+</div>
+
+<div class="row mb-2">
+    <div class="col-md">
+        <InputText @bind-Value="Model.Name" @bind-Value:after="@(async () => await ContactChangedAsync())" class="form-control form-control-sm" placeholder="Name" autocomplete="off"></InputText>
+        <ValidationMessage For="@(() => Model.Name)" />
+    </div>
+</div>
+<div class="row mb-2">
+    <div class="col-md">
+        <InputText @bind-Value="Model.Address" @bind-Value:after="@(async () => await ContactChangedAsync())" class="form-control form-control-sm" placeholder="Address" autocomplete="off"></InputText>
+        <ValidationMessage For="@(() => Model.Address)" />
+    </div>
+</div>
+<div class="row mb-2">
+    <div class="col-md">
+        <InputText @bind-Value="Model.City" @bind-Value:after="@(async () => await ContactChangedAsync())" class="form-control form-control-sm" placeholder="City" autocomplete="off"></InputText>
+        <ValidationMessage For="@(() => Model.City)" />
+    </div>
+    <div class="col-md">
+        <InputText @bind-Value="Model.State" @bind-Value:after="@(async () => await ContactChangedAsync())" class="form-control form-control-sm" placeholder="State" autocomplete="off"></InputText>
+        <ValidationMessage For="@(() => Model.State)" />
+    </div>
+    <div class="col-md">
+        <InputText @bind-Value="Model.PostalCode" @bind-Value:after="@(async () => await ContactChangedAsync())" class="form-control form-control-sm" placeholder="ZIP" autocomplete="off"></InputText>
+        <ValidationMessage For="@(() => Model.PostalCode)" />
+    </div>
+</div>
+
+@code {
+
+    [Parameter, EditorRequired]
+    public ContactModel Model { get; set; }
+
+    [Parameter]
+    public EventCallback<ContactModel> ModelChanged { get; set; }
+
+    private async Task ContactChangedAsync()
+    {
+        await ModelChanged.InvokeAsync(Model);
+    }
+}
