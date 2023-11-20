@@ -1,9 +1,12 @@
-﻿namespace ValidationPrototype.Models;
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace ValidationPrototype.Models;
 
 public class ContactModel
 {
     public string Header { get; set; }
 
+    [Required]
     public string Name { get; set; }
 
     public string Address { get; set; }

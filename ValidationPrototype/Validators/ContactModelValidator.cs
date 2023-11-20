@@ -7,7 +7,7 @@ public class ContactModelValidator : AbstractValidator<ContactModel>
 {
     public ContactModelValidator()
     {
-        RuleFor(x => x.Name).NotEmpty().WithState(x => x);
+        RuleFor(x => x.Name).NotEmpty().WithState(x => x).WithName("Name");
         RuleFor(x => x.Address).NotEmpty().WithState(x => x);
         RuleFor(x => x.City).NotEmpty().WithState(x => x);
         RuleFor(x => x.State).NotEmpty().WithState(x => x);

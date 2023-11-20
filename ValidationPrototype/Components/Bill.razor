@@ -2,53 +2,27 @@
 @using ValidationPrototype.Validators
 <h3>Bill</h3>
 
-<EditForm EditContext="_editContext" OnValidSubmit="Submit">
-    <ObjectGraphDataAnnotationsValidator />
+<EditForm Model="Model" OnValidSubmit="Submit">
+    <FluentValidator TValidator="BillModelValidator" />
     <div class="row">
         <div class="col-12">
             <InputText @bind-Value="Model.BillName" class="form-control form-control-sm" placeholder="Bill Name" autocomplete="off"></InputText>
-            <ValidationMessage For="@(() => Model.BillName)" />
+            <ValidationMessage For="@(() => Model.BillName)"/>
         </div>
     </div>
 
-    <hr />
-    
+    <hr/>
+
     <div class="row">
         <div class="col">
-            <Contact Model="Model.BilleeContact" />
+            <Contact Model="Model.BilleeContact"/>
         </div>
         <div class="col-1"></div>
         <div class="col">
-            <Contact Model="Model.BillerContact" />
+            <Contact Model="Model.BillerContact"/>
         </div>
     </div>
-    
 
-    @if (_editContext is not null && _editContext.GetValidationMessages().Any())
-    {
-        <div class="row">
-            <div class="col-md-2">
-            </div>
-            <div class="col-md-8">
-                <div class="card text-white bg-danger mb-4">
-                    <div class="card-header bg-transparent border-bottom"><i class="mdi mdi-close-octagon me-2"></i> Error Submitting Bill</div>
-                    <div class="card-body">
-                        <p class="card-text">
-                            <ul>
-                                @foreach (var message in _editContext.GetValidationMessages())
-                                {
-                                    <li>@message</li>
-                                }
-                            </ul>
-                        </p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-2">
-            </div>
-        </div>
-    }
-    
     <div class="row">
         <div class="col-md">
             <div class="float-sm-end">
@@ -59,57 +33,14 @@
 </EditForm>
 
 @code {
-    private EditContext? _editContext;
-    private ValidationMessageStore? _messageStore;
-
 
     [Parameter]
     public BillModel Model { get; set; } = new();
-
-    protected override void OnInitialized()
-    {
-        _editContext = new EditContext(Model);
-        _editContext.OnValidationRequested += HandleValidationRequested;
-        _editContext.OnFieldChanged += HandleOnFieldChanged;
-
-        _messageStore = new(_editContext);
-    }
-
-    private void HandleOnFieldChanged(object? sender, FieldChangedEventArgs e)
-    {
-        Console.WriteLine($"Field {e.FieldIdentifier.FieldName} has been changed");
-    }
-
-    private void HandleValidationRequested(object? sender, ValidationRequestedEventArgs e)
-    {
-        var validator = new BillModelValidator();
-        var validationResult = validator.Validate(Model);
-        if (validationResult.Errors.Any())
-        {
-            foreach (var error in validationResult.Errors)
-            {
-                
-                var accessor = error.PropertyName;
-                var message = error.ErrorMessage;
-
-                var fieldIdentifier = new FieldIdentifier(error.CustomState, accessor);
-                _messageStore?.Add(fieldIdentifier, message);
-            }
-        }
-    }
 
     private Task Submit(EditContext arg)
     {
         Console.WriteLine("Submitted!");
         return Task.CompletedTask;
-    }
-
-    public void Dispose()
-    {
-        if (_editContext is not null)
-        {
-            _editContext.OnValidationRequested -= HandleValidationRequested;
-        }
     }
 
 }

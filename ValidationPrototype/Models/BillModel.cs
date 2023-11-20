@@ -4,6 +4,7 @@ namespace ValidationPrototype.Models
 {
     public class BillModel
     {
+        [Required]
         public string BillName { get; set; }
 
         [ValidateComplexType]

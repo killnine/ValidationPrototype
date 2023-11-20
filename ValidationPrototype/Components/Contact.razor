@@ -9,7 +9,7 @@
 <div class="row mb-2">
     <div class="col-md">
         <InputText @bind-Value="Model.Name" @bind-Value:after="@(async () => await ContactChangedAsync())" class="form-control form-control-sm" placeholder="Name" autocomplete="off"></InputText>
-        <ValidationMessage For="@(() => Model.Name)" />
+        <ValidationMessage For="@(() => Model.Name)"/>
     </div>
 </div>
 <div class="row mb-2">
@@ -34,7 +34,6 @@
 </div>
 
 @code {
-
     [Parameter, EditorRequired]
     public ContactModel Model { get; set; }
 

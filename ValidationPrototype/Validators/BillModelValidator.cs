@@ -11,10 +11,12 @@ namespace ValidationPrototype.Validators
                 .WithState(bill => bill);
             RuleFor(x => x.BilleeContact).SetValidator(new ContactModelValidator())
                 .WithState(billee => billee)
-                .WithMessage("Please verify required fields for the Billee are populated");
+                .WithMessage("Please verify required fields for the Billee are populated")
+                .WithName("Model.BileeContact");
             RuleFor(x => x.BillerContact).SetValidator(new ContactModelValidator())
                 .WithState(biller => biller)
-                .WithMessage("Please verify required fields for the Billee are populated");
+                .WithMessage("Please verify required fields for the Billee are populated")
+                .WithMessage("Model.BillerContact");
         }
     }
 }
